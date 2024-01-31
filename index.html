@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hive/戦績</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #8e44ad; /* テーマカラー: 紫 */
+            color: #f39c12; /* テーマカラー: 黄色 */
+        }
+
+        #logo {
+            margin: 64px 0;
+            max-width: 100%;
+            height: auto;
+        }
+
+        #search-container {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        #username-input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            border: 4px solid #f39c12; /* ボーダーカラー: 黄色 */
+            border-radius: 32px;
+            background-color: #ecf0f1; /* 入力ボックスの背景色: グレー */
+            color: #2c3e50; /* 入力ボックスのテキストカラー: ダークグレー */
+        }
+
+        #search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #f39c12; /* ボタンの背景色: 黄色 */
+            color: #fff;
+            border: none;
+            border-radius: 32px;
+        }
+
+        #search-button:hover {
+            background-color: #e39210;
+        }
+
+        #result-container {
+            text-align: center;
+            margin-top: 40px; /* 間隔を広げる */
+        }
+
+        #profile-iframe {
+            width: 100%;
+            height: 512px;
+            border: none;
+            border-radius: 32px; /* 角を32pxでまるく */
+        }
+    </style>
+</head>
+<body>
+
+<img id="logo" src="logo.png" alt="Hive Logo" width="30%">
+    <h2>Hiveサーバーにおけるユーザーの戦績閲覧システム</h2>
+    <h3>Made by SK0528JP</h3>
+
+<div id="search-container">
+    <input type="text" id="username-input" placeholder="MCIDを入力">
+    <button id="search-button" onclick="searchProfile()">検索</button>
+</div>
+
+<div id="result-container">
+    <iframe id="profile-iframe" src="" frameborder="0"></iframe>
+</div>
+
+<script>
+    function searchProfile() {
+        var username = document.getElementById("username-input").value;
+        var iframe = document.getElementById("profile-iframe");
+        iframe.src = "https://playhive.com/profile/" + encodeURIComponent(username);
+    }
+</script>
+
+</body>
+</html>
