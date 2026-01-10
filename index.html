@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HIVE ANALYTICS | FIXED EDITION</title>
+    <title>HIVE ANALYTICS | SPEEDSTER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #020617;
-            --bg-glass: rgba(30, 41, 59, 0.65);
-            --accent-gold: #f59e0b;
-            --accent-purple: #a855f7;
-            --accent-cyan: #06b6d4;
+            --bg-glass: rgba(30, 41, 59, 0.7);
+            --accent-gold: #fbbf24;
+            --accent-purple: #c084fc;
+            --accent-cyan: #22d3ee;
             --accent-rose: #f43f5e;
-            --accent-green: #10b981;
+            --accent-green: #34d399;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --border-glass: 1px solid rgba(255, 255, 255, 0.08);
@@ -30,398 +30,379 @@
             display: flex; flex-direction: column; align-items: center;
             padding: 20px 15px;
             background-image: 
-                radial-gradient(circle at 10% 10%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+                radial-gradient(circle at top, rgba(192, 132, 252, 0.15), transparent 40%),
+                radial-gradient(circle at bottom, rgba(34, 211, 238, 0.1), transparent 40%);
             background-attachment: fixed;
         }
 
-        /* --- Search Area --- */
-        .search-wrapper {
-            width: 100%; max-width: 600px; text-align: center; margin-top: 3vh; margin-bottom: 25px;
-            animation: slideDown 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        /* --- Header --- */
+        .search-area {
+            width: 100%; max-width: 600px; text-align: center; margin-top: 4vh; margin-bottom: 20px;
+            animation: slideDown 0.5s ease-out;
         }
 
         h1 {
-            font-size: clamp(2rem, 7vw, 3.2rem); font-weight: 900; letter-spacing: -2px; margin: 0 0 25px 0;
-            background: linear-gradient(135deg, #fff 30%, var(--accent-gold));
+            font-size: clamp(2rem, 7vw, 3rem); font-weight: 900; margin: 0 0 20px 0; letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 40%, var(--accent-gold));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
         }
 
-        .input-group {
-            position: relative; display: flex; align-items: center;
-            background: var(--bg-glass); padding: 8px; border-radius: 20px;
-            border: var(--border-glass); backdrop-filter: blur(16px);
+        .input-box {
+            display: flex; background: var(--bg-glass); padding: 8px; border-radius: 20px;
+            border: var(--border-glass); backdrop-filter: blur(12px);
             box-shadow: 0 10px 30px -5px rgba(0,0,0,0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: 0.3s;
         }
+        .input-box:focus-within { transform: translateY(-2px); border-color: var(--accent-purple); }
 
-        .input-group:focus-within {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px -5px rgba(168, 85, 247, 0.25);
-            border-color: rgba(168, 85, 247, 0.5);
+        input { flex: 1; background: transparent; border: none; color: #fff; padding: 12px; font-size: 1.1rem; }
+        .btn-go {
+            background: var(--accent-gold); color: #000; border: none; width: 48px; height: 48px;
+            border-radius: 14px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
-
-        input {
-            flex: 1; background: transparent; border: none; color: #fff;
-            padding: 14px 15px; font-size: 1.1rem; font-family: 'Inter', sans-serif; min-width: 0;
-        }
-
-        .btn-submit {
-            background: var(--accent-gold); color: #0f172a; border: none;
-            width: 50px; height: 50px; border-radius: 14px;
-            font-size: 1.2rem; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-        }
-        .btn-submit:active { transform: scale(0.92); }
+        .btn-go:active { transform: scale(0.9); }
 
         /* --- Dashboard --- */
-        #main-dashboard { width: 100%; max-width: 1100px; display: none; padding-bottom: 50px; }
+        #dashboard { width: 100%; max-width: 1100px; display: none; padding-bottom: 60px; }
 
-        /* Profile Header */
-        .profile-header {
-            background: var(--bg-glass); border-radius: 28px; border: var(--border-glass);
-            padding: 30px; margin-bottom: 25px;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            backdrop-filter: blur(20px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
+        .profile-card {
+            background: var(--bg-glass); border-radius: 24px; border: var(--border-glass);
+            padding: 25px; margin-bottom: 20px; display: flex; flex-direction: column;
+            align-items: center; text-align: center; backdrop-filter: blur(20px);
+            animation: fadeIn 0.5s ease-out;
         }
-        @media (min-width: 768px) { .profile-header { flex-direction: row; text-align: left; gap: 35px; padding: 40px; } }
+        @media(min-width: 768px) { .profile-card { flex-direction: row; text-align: left; gap: 30px; padding: 35px; } }
 
-        .avatar-box {
-            position: relative; padding: 5px; border-radius: 30px;
+        .avatar-wrap {
+            position: relative; padding: 4px; border-radius: 28px;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
             margin-bottom: 15px; flex-shrink: 0;
         }
-        @media (min-width: 768px) { .avatar-box { margin-bottom: 0; } }
+        @media(min-width: 768px) { .avatar-wrap { margin-bottom: 0; } }
 
-        .avatar-img {
-            width: 100px; height: 100px; border-radius: 24px; background: #0f172a;
-            object-fit: cover; display: block; border: 4px solid #0f172a;
-        }
-        @media (min-width: 768px) { .avatar-img { width: 120px; height: 120px; } }
+        .avatar { width: 90px; height: 90px; border-radius: 24px; background: #000; object-fit: cover; display: block; }
+        @media(min-width: 768px) { .avatar { width: 110px; height: 110px; } }
 
-        .profile-info h2 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 800; line-height: 1; overflow-wrap: break-word; }
-        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-        @media (min-width: 768px) { .tag-container { justify-content: flex-start; } }
+        .p-name { font-size: 2rem; font-weight: 800; margin: 0 0 8px 0; line-height: 1; }
+        .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        @media(min-width: 768px) { .badges { justify-content: flex-start; } }
 
-        .meta-tag {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+        .tag {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+            padding: 5px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 700;
             color: var(--accent-cyan); display: flex; align-items: center; gap: 6px;
         }
 
-        /* Tabs */
-        .scroll-wrapper {
-            overflow-x: auto; padding-bottom: 15px; margin: 0 -15px 15px -15px;
-            padding-left: 15px; padding-right: 15px;
-            -webkit-overflow-scrolling: touch; scrollbar-width: none;
-        }
-        .scroll-wrapper::-webkit-scrollbar { display: none; }
-
-        .tabs-list { display: flex; gap: 10px; }
-
-        .tab-item {
-            background: var(--bg-glass); color: var(--text-secondary); border: var(--border-glass);
-            padding: 10px 22px; border-radius: 16px; white-space: nowrap; font-weight: 700;
-            font-size: 0.9rem; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.25s;
-        }
-        .tab-item.active {
-            background: var(--accent-purple); color: #fff; border-color: transparent;
-            box-shadow: 0 8px 20px -5px rgba(168, 85, 247, 0.5); transform: translateY(-2px);
-        }
-
-        /* Stats Grid */
-        .grid-container {
-            display: grid; grid-template-columns: 1fr; gap: 15px;
-        }
-        @media (min-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 950px) { .grid-container { grid-template-columns: repeat(3, 1fr); } }
-
-        .stat-card {
-            background: var(--bg-glass); border: var(--border-glass); border-radius: 24px;
-            padding: 22px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; justify-content: center;
-        }
+        /* --- Tabs --- */
+        .tabs-scroller { overflow-x: auto; padding-bottom: 10px; margin: 0 -15px 15px -15px; padding-left: 15px; scrollbar-width: none; }
+        .tabs-wrapper { display: flex; gap: 10px; }
         
-        .bg-icon {
-            position: absolute; top: 15px; right: 20px; font-size: 3rem;
-            color: #fff; opacity: 0.04; pointer-events: none;
+        .tab-btn {
+            background: var(--bg-glass); color: var(--text-secondary); border: var(--border-glass);
+            padding: 10px 18px; border-radius: 14px; white-space: nowrap; font-weight: 700;
+            font-size: 0.85rem; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;
+            opacity: 0; animation: popIn 0.3s forwards; /* Pop-in animation */
         }
+        .tab-btn.active { background: var(--accent-purple); color: #fff; border-color: transparent; }
 
-        .stat-title { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 800; letter-spacing: 1px; margin-bottom: 6px; }
-        .stat-number { font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; font-weight: 700; color: #fff; display: block; }
+        /* --- Stats Grid --- */
+        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media(min-width: 900px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        /* Fixed Progress Bars */
-        .bar-bg {
-            margin-top: 14px; background: rgba(0,0,0,0.4); height: 6px; width: 100%;
-            border-radius: 10px; overflow: hidden; position: relative;
+        .card {
+            background: var(--bg-glass); border: var(--border-glass); border-radius: 20px;
+            padding: 20px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center;
         }
-        .bar-fill {
-            height: 100%; border-radius: 10px; width: 0%; /* Start at 0 */
-            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .fill-win { background: var(--accent-green); }
-        .fill-kd { background: var(--accent-rose); }
-        .fill-xp { background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan)); }
+        .card-icon { position: absolute; top: 15px; right: 20px; font-size: 2.5rem; opacity: 0.05; color: #fff; }
+        .card-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 800; letter-spacing: 1px; }
+        .card-val { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 700; color: #fff; margin-top: 5px; }
+        
+        /* Progress Bar */
+        .bar-track { background: rgba(0,0,0,0.4); height: 5px; width: 100%; border-radius: 10px; margin-top: 12px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; transition: width 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .c-win { background: var(--accent-green); }
+        .c-kd { background: var(--accent-rose); }
+        .c-xp { background: var(--accent-cyan); }
+        
+        .sub-text { font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; display: flex; justify-content: space-between; font-weight: 600; }
+        .sub-text b { color: #fff; }
 
-        .detail-row { font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; display: flex; justify-content: space-between; font-weight: 500; }
-        .detail-row strong { color: var(--text-primary); }
-
-        /* Loader & Error */
-        .loader { display: none; width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 40px auto; }
-        .error-box { display: none; background: rgba(244, 63, 94, 0.1); border: 1px solid var(--accent-rose); color: var(--accent-rose); padding: 15px; border-radius: 16px; margin-top: 20px; text-align: center; font-size: 0.9rem; line-height: 1.5; }
+        /* Loader */
+        .loader { display: none; margin: 30px auto; width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .error { display: none; color: var(--accent-rose); background: rgba(244,63,94,0.1); padding: 15px; border-radius: 15px; margin-top: 20px; text-align: center; }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="search-wrapper">
+    <div class="search-area">
         <h1>HIVE ANALYTICS</h1>
-        <div class="input-group">
-            <i class="fa-solid fa-magnifying-glass" style="margin-left: 15px; color: var(--text-secondary);"></i>
-            <input type="text" id="targetName" placeholder="User ID" autocomplete="off">
-            <button class="btn-submit" onclick="executeSearch()">
-                <i class="fa-solid fa-arrow-right"></i>
+        <div class="input-box">
+            <input type="text" id="inpName" placeholder="Gamertag" autocomplete="off">
+            <button class="btn-go" onclick="startStream()">
+                <i class="fa-solid fa-bolt"></i>
             </button>
         </div>
-        <div id="errorDisplay" class="error-box"></div>
+        <div id="errorMsg" class="error"></div>
     </div>
 
-    <div class="loader" id="loadingSpinner"></div>
+    <div id="loader" class="loader"></div>
 
-    <main id="main-dashboard">
-        <div class="profile-header">
-            <div class="avatar-box">
-                <img id="pAvatar" class="avatar-img" src="" alt="Avatar" onerror="this.src='https://playhive.com/static/img/hive-logo.png'">
+    <main id="dashboard">
+        <div class="profile-card">
+            <div class="avatar-wrap">
+                <img id="uAvatar" class="avatar" src="" onerror="this.src='https://playhive.com/static/img/hive-logo.png'">
             </div>
-            <div class="profile-info">
-                <h2 id="pName">---</h2>
-                <div class="tag-container" id="pBadges"></div>
+            <div class="info">
+                <div class="p-name" id="uName">---</div>
+                <div class="badges" id="liveBadges"></div>
             </div>
         </div>
 
-        <div class="scroll-wrapper">
-            <div class="tabs-list" id="navContainer"></div>
+        <div class="tabs-scroller">
+            <div class="tabs-wrapper" id="tabs"></div>
         </div>
 
-        <div class="grid-container" id="statsArea"></div>
+        <div class="stats-grid" id="grid"></div>
     </main>
 
     <script>
-        const API_PROXY = "https://api.allorigins.win/raw?url=";
-        const HIVE_ENDPOINT = "https://api.playhive.com/v0/game/all";
+        // 設定: 高速な corsproxy.io を優先使用
+        const PROXIES = [
+            "https://corsproxy.io/?",
+            "https://api.allorigins.win/raw?url="
+        ];
+        const HIVE_API = "https://api.playhive.com/v0/game/all";
         
-        const GAMES_CONFIG = {
-            wars:   { name: "Bed Wars", icon: "fa-bed" },
-            sky:    { name: "SkyWars", icon: "fa-cloud" },
-            sg:     { name: "Survival Games", icon: "fa-fire" },
-            dr:     { name: "DeathRun", icon: "fa-person-running" },
-            hide:   { name: "Hide & Seek", icon: "fa-ghost" },
-            murder: { name: "Murder Mystery", icon: "fa-mask" },
-            build:  { name: "Just Build", icon: "fa-hammer" },
-            drop:   { name: "Block Drop", icon: "fa-circle-down" },
-            ground: { name: "Ground Wars", icon: "fa-land-mine-on" },
-            ctf:    { name: "Capture the Flag", icon: "fa-flag" },
-            bridge: { name: "The Bridge", icon: "fa-bridge" },
-            party:  { name: "Block Party", icon: "fa-music" }
+        const GAME_META = {
+            wars:   { n: "BedWars", i: "fa-bed" },
+            sky:    { n: "SkyWars", i: "fa-cloud" },
+            sg:     { n: "Survival", i: "fa-fire" },
+            dr:     { n: "DeathRun", i: "fa-person-running" },
+            hide:   { n: "Hide", i: "fa-ghost" },
+            murder: { n: "Murder", i: "fa-mask" },
+            build:  { n: "Build", i: "fa-hammer" },
+            drop:   { n: "BlockDrop", i: "fa-circle-down" },
+            ground: { n: "Ground", i: "fa-land-mine-on" },
+            ctf:    { n: "CTF", i: "fa-flag" },
+            bridge: { n: "Bridge", i: "fa-bridge" },
+            party:  { n: "Party", i: "fa-music" }
         };
 
-        let playerCache = {};
+        // グローバル状態
+        let playerData = {};
+        let liveXP = 0;
+        let activeGames = 0;
+        let isFirstLoad = true;
+        let activeProxyIndex = 0;
 
-        // Enter Key Search
-        document.getElementById('targetName').addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') executeSearch();
+        // Enterキー対応
+        document.getElementById('inpName').addEventListener('keypress', e => {
+            if(e.key === 'Enter') startStream();
         });
 
-        async function executeSearch() {
-            const nameInput = document.getElementById('targetName').value.trim();
-            if(!nameInput) return;
-
-            const loader = document.getElementById('loadingSpinner');
-            const dashboard = document.getElementById('main-dashboard');
-            const errorDisp = document.getElementById('errorDisplay');
-
-            loader.style.display = 'block';
-            dashboard.style.display = 'none';
-            errorDisp.style.display = 'none';
-            document.getElementById('targetName').blur();
-
-            try {
-                const safeName = encodeURIComponent(nameInput);
-                const keys = Object.keys(GAMES_CONFIG);
-
-                // Parallel Fetch
-                const responses = await Promise.all(keys.map(k => 
-                    fetch(`${API_PROXY}${encodeURIComponent(`${HIVE_ENDPOINT}/${k}/${safeName}`)}`)
-                    .then(r => r.ok ? r.json() : null)
-                    .catch(() => null)
-                ));
-
-                playerCache = {};
-                let found = false;
-                let totalXP = 0;
-                let officialAvatar = "";
-                let firstSeen = Infinity;
-
-                keys.forEach((key, i) => {
-                    const d = responses[i];
-                    if(d) {
-                        playerCache[key] = d;
-                        found = true;
-                        totalXP += (d.xp || 0);
-                        if(d.first_played && d.first_played < firstSeen) firstSeen = d.first_played;
-                        if(!officialAvatar && d.avatar_url) officialAvatar = d.avatar_url;
-                    }
-                });
-
-                if(!found) throw new Error(`Player "<b>${nameInput}</b>" not found.<br>Check casing (e.g. "Steve" vs "steve").`);
-
-                // Update Profile
-                document.getElementById('pName').innerText = nameInput;
-                document.getElementById('pAvatar').src = officialAvatar || `https://crafthead.net/avatar/${safeName}`;
-                
-                const joinStr = firstSeen !== Infinity ? new Date(firstSeen * 1000).toLocaleDateString() : 'Unknown';
-                
-                // Determine Generic Tier based on Total XP (Cosmetic only)
-                let tier = "Novice";
-                if(totalXP > 10000) tier = "Regular";
-                if(totalXP > 100000) tier = "Pro";
-                if(totalXP > 500000) tier = "Master";
-                if(totalXP > 1000000) tier = "Legend";
-
-                document.getElementById('pBadges').innerHTML = `
-                    <div class="meta-tag"><i class="fa-solid fa-layer-group"></i> ${tier}</div>
-                    <div class="meta-tag"><i class="fa-solid fa-star"></i> XP: ${totalXP.toLocaleString()}</div>
-                    <div class="meta-tag"><i class="fa-solid fa-clock"></i> Since: ${joinStr}</div>
-                `;
-
-                setupTabs();
-                renderStats(Object.keys(playerCache)[0]);
-
-                loader.style.display = 'none';
-                dashboard.style.display = 'block';
-
-            } catch (err) {
-                loader.style.display = 'none';
-                errorDisp.innerHTML = err.message;
-                errorDisp.style.display = 'block';
-            }
+        function resetState() {
+            playerData = {};
+            liveXP = 0;
+            activeGames = 0;
+            isFirstLoad = true;
+            document.getElementById('tabs').innerHTML = '';
+            document.getElementById('grid').innerHTML = '';
+            document.getElementById('liveBadges').innerHTML = '<div class="tag">Searching...</div>';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
         }
 
-        function setupTabs() {
-            const container = document.getElementById('navContainer');
-            container.innerHTML = '';
-            Object.keys(playerCache).forEach(k => {
-                const btn = document.createElement('div');
-                btn.className = 'tab-item';
-                btn.id = `tab-${k}`;
-                btn.innerHTML = `<i class="fa-solid ${GAMES_CONFIG[k].icon}"></i> ${GAMES_CONFIG[k].name}`;
-                btn.onclick = () => renderStats(k);
-                container.appendChild(btn);
+        async function startStream() {
+            const name = document.getElementById('inpName').value.trim();
+            if(!name) return;
+            
+            resetState();
+            document.getElementById('inpName').blur();
+
+            const encodedName = encodeURIComponent(name);
+            const gameKeys = Object.keys(GAME_META);
+            let anyFound = false;
+
+            // 各ゲームのデータを非同期で個別に取得（待たない）
+            const fetchPromises = gameKeys.map(key => 
+                fetchGameData(key, encodedName).then(data => {
+                    if (data) {
+                        anyFound = true;
+                        handleGameData(key, data, name, encodedName);
+                    }
+                })
+            );
+
+            // すべて完了後の処理（エラー判定用）
+            Promise.allSettled(fetchPromises).then(() => {
+                document.getElementById('loader').style.display = 'none';
+                if (!anyFound) {
+                    document.getElementById('errorMsg').innerText = "Player not found or API error.";
+                    document.getElementById('errorMsg').style.display = 'block';
+                }
             });
         }
 
-        function renderStats(key) {
-            // Tab Active State
-            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-            const activeTab = document.getElementById(`tab-${key}`);
-            if(activeTab) {
-                activeTab.classList.add('active');
-                activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        async function fetchGameData(key, encodedName) {
+            const url = `${HIVE_API}/${key}/${encodedName}`;
+            // 優先プロキシで試行
+            try {
+                const res = await fetch(`${PROXIES[0]}${encodeURIComponent(url)}`);
+                if(res.ok) return await res.json();
+            } catch(e) {}
+            
+            // 失敗したら予備プロキシで試行
+            try {
+                const res = await fetch(`${PROXIES[1]}${encodeURIComponent(url)}`);
+                if(res.ok) return await res.json();
+            } catch(e) {}
+            
+            return null;
+        }
+
+        function handleGameData(key, data, name, encodedName) {
+            playerData[key] = data;
+            liveXP += (data.xp || 0);
+            activeGames++;
+
+            // --- 最初のデータが届いた瞬間にダッシュボードを表示 ---
+            if (isFirstLoad) {
+                isFirstLoad = false;
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // プロフィール初期化
+                document.getElementById('uName').innerText = name;
+                // 公式アバターがあれば使用、なければCrafthead
+                const ava = data.avatar_url || `https://crafthead.net/avatar/${encodedName}`;
+                document.getElementById('uAvatar').src = ava;
+
+                // 最初のタブをアクティブにして表示
+                renderTabs();
+                showStats(key);
+            } else {
+                // 2つ目以降はタブだけ更新
+                renderTabs();
             }
+            
+            updateLiveBadges();
+        }
 
-            const grid = document.getElementById('statsArea');
+        function updateLiveBadges() {
+            // XPの更新アニメーション
+            document.getElementById('liveBadges').innerHTML = `
+                <div class="tag"><i class="fa-solid fa-star"></i> Total XP: ${liveXP.toLocaleString()}</div>
+                <div class="tag"><i class="fa-solid fa-gamepad"></i> Games: ${activeGames}</div>
+            `;
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('tabs');
+            // 既存のボタンを確認し、新しいものだけ追加するのではなく、
+            // 順序を保つために再描画するが、パフォーマンスのためDOM操作を最小限に
+            // 今回は単純化のため、キー順序でソートして再生成（数が少ないので高速）
+            
+            const currentActiveId = document.querySelector('.tab-btn.active')?.id;
+            
+            // 取得済みデータのみ抽出してソート
+            const sortedKeys = Object.keys(playerData).sort((a,b) => {
+                const idxA = Object.keys(GAME_META).indexOf(a);
+                const idxB = Object.keys(GAME_META).indexOf(b);
+                return idxA - idxB;
+            });
+
+            container.innerHTML = '';
+            sortedKeys.forEach(k => {
+                const btn = document.createElement('div');
+                btn.className = 'tab-btn';
+                btn.id = `tab-${k}`;
+                if(`tab-${k}` === currentActiveId) btn.classList.add('active');
+                
+                // アイコン + 名前
+                btn.innerHTML = `<i class="fa-solid ${GAME_META[k].i}"></i> ${GAME_META[k].n}`;
+                btn.onclick = () => showStats(k);
+                container.appendChild(btn);
+            });
+            
+            // もしアクティブがなければ先頭をアクティブに
+            if(!document.querySelector('.tab-btn.active') && sortedKeys.length > 0) {
+                 showStats(sortedKeys[0]);
+            }
+        }
+
+        function showStats(key) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            const btn = document.getElementById(`tab-${key}`);
+            if(btn) btn.classList.add('active');
+
+            const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            const d = playerCache[key];
+            
+            const d = playerData[key];
+            if(!d) return;
 
-            // Metrics Calculation
             const played = d.played || 0;
-            const victories = d.victories || 0;
+            const wins = d.victories || 0;
             const kills = d.kills || 0;
             const deaths = d.deaths || 0;
-            const xp = d.xp || 0;
+            
+            const winRate = played > 0 ? ((wins/played)*100).toFixed(1) : "0.0";
+            const kd = deaths > 0 ? (kills/deaths).toFixed(2) : kills;
+            const xpAvg = played > 0 ? Math.floor(d.xp/played) : 0;
 
-            const winRate = played > 0 ? ((victories / played) * 100).toFixed(1) : "0.0";
-            const kd = deaths > 0 ? (kills / deaths).toFixed(2) : kills;
-            const xpPerGame = played > 0 ? Math.floor(xp / played) : 0; // "Avg XP" replaces "Level"
-
-            // Helper to Create Card with Fixed Animation Logic
-            const createCard = (label, value, icon, subHTML = null, barColorClass = null, barPercent = 0) => {
-                const el = document.createElement('div');
-                el.className = 'stat-card';
-                
+            const mkCard = (label, val, icon, sub=null, barColor=null, barP=0) => {
+                const card = document.createElement('div');
+                card.className = 'card';
                 let html = `
-                    <i class="fa-solid ${icon} bg-icon"></i>
-                    <span class="stat-title">${label}</span>
-                    <span class="stat-number">${value.toLocaleString()}</span>
+                    <i class="fa-solid ${icon} card-icon"></i>
+                    <span class="card-label">${label}</span>
+                    <span class="card-val">${val.toLocaleString()}</span>
                 `;
-
-                if(subHTML) html += subHTML;
+                if(sub) html += sub;
+                if(barColor) html += `<div class="bar-track"><div class="bar-fill ${barColor}"></div></div>`;
                 
-                // Add Progress Bar if requested
-                if(barColorClass) {
-                    html += `
-                        <div class="bar-bg">
-                            <div class="bar-fill ${barColorClass}"></div>
-                        </div>
-                    `;
-                }
+                card.innerHTML = html;
+                grid.appendChild(card);
 
-                el.innerHTML = html;
-                grid.appendChild(el);
-
-                // --- CRITICAL FIX: Robust Animation Trigger ---
-                if(barColorClass) {
-                    const bar = el.querySelector('.bar-fill');
-                    // Force a reflow before setting width (ensures transition works)
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            bar.style.width = `${Math.min(barPercent, 100)}%`;
-                        });
-                    });
+                if(barColor) {
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        card.querySelector('.bar-fill').style.width = `${Math.min(barP, 100)}%`;
+                    }));
                 }
             };
 
-            // 1. Victories (Win Rate Bar)
-            createCard("Victories", victories, "fa-trophy", 
-                `<div class="detail-row"><span>Win Rate</span><strong>${winRate}%</strong></div>`,
-                "fill-win", winRate
-            );
+            // 1. Victories
+            mkCard("Victories", wins, "fa-trophy", 
+                `<div class="sub-text"><span>Win Rate</span><b>${winRate}%</b></div>`, 
+                "c-win", winRate);
 
-            // 2. Kills (K/D Bar - Capped visually at 5.0 for scale)
-            const kdScale = Math.min((kd / 5) * 100, 100); 
-            createCard("Kills", kills, "fa-crosshairs", 
-                `<div class="detail-row"><span>K/D Ratio</span><strong>${kd}</strong></div>`,
-                "fill-kd", kdScale
-            );
+            // 2. Kills
+            mkCard("Kills", kills, "fa-crosshairs", 
+                `<div class="sub-text"><span>K/D</span><b>${kd}</b></div>`, 
+                "c-kd", Math.min((kd/5)*100, 100));
 
-            // 3. Efficiency (XP per Game - Replaces inaccurate Level)
-            // Use a visual scale where 500 XP/game is considered "Great" (100%)
-            const efficiencyScale = Math.min((xpPerGame / 500) * 100, 100);
-            createCard("Avg XP / Game", xpPerGame, "fa-bolt", 
-                `<div class="detail-row"><span>Efficiency</span><strong>${xpPerGame} XP</strong></div>`,
-                "fill-xp", efficiencyScale
-            );
+            // 3. Efficiency
+            mkCard("XP / Game", xpAvg, "fa-bolt", 
+                `<div class="sub-text"><span>Total XP</span><b>${(d.xp||0).toLocaleString()}</b></div>`,
+                "c-xp", Math.min((xpAvg/500)*100, 100));
 
-            // 4. Basic Stats
-            createCard("Matches Played", played, "fa-gamepad");
-            createCard("Deaths", deaths, "fa-skull");
-            createCard("Total XP", xp, "fa-fire"); // Just raw XP, honest and accurate
+            // 4. Basic
+            mkCard("Played", played, "fa-gamepad");
+            mkCard("Deaths", deaths, "fa-skull");
 
-            // 5. Game Specifics
-            if(key === 'wars') {
-                createCard("Final Kills", d.final_kills, "fa-skull-crossbones");
-                createCard("Treasures", d.treasure_destroyed, "fa-gem");
-            }
-            if(key === 'murder') {
-                createCard("Coins", d.coins_collected, "fa-coins");
-                createCard("Hero Kills", d.murderer_eliminations, "fa-shield-halved");
-            }
-            if(key === 'sky') createCard("Mystery Chests", d.mystery_chests_destroyed, "fa-box-open");
-            if(key === 'dr') createCard("Checkpoints", d.checkpoints, "fa-flag-checkered");
-            if(key === 'hide') createCard("Hider Kills", d.hider_kills, "fa-ghost");
+            // 5. Unique Stats
+            if(key === 'wars') mkCard("Treasures", d.treasure_destroyed, "fa-gem");
+            if(key === 'sky') mkCard("Chests", d.mystery_chests_destroyed, "fa-box-open");
+            if(key === 'murder') mkCard("Coins", d.coins_collected, "fa-coins");
+            if(key === 'dr') mkCard("Checkpoints", d.checkpoints, "fa-flag-checkered");
+            if(key === 'hide') mkCard("Hider Kills", d.hider_kills, "fa-ghost");
         }
     </script>
 </body>
