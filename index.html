@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The HIVE MC Status | Ultimate</title>
+    <title>The HIVE MC Status | ULTIMATE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* テーマカラー定義 */
-            --bg-dark: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --bg-input: rgba(15, 23, 42, 0.8);
+            /* Cyberpunk / Glassmorphism Theme */
+            --bg-dark: #09090b;
+            --bg-card: rgba(24, 24, 27, 0.6);
+            --bg-card-hover: rgba(39, 39, 42, 0.8);
             
-            --accent-yellow: #fbbf24; /* Hive Yellow */
-            --accent-purple: #8b5cf6; /* Hive Purple */
-            --accent-cyan: #22d3ee;
-            --accent-rose: #f43f5e;
+            --accent-primary: #fbbf24; /* Hive Gold */
+            --accent-secondary: #8b5cf6; /* Ender Purple */
+            --accent-success: #10b981;
+            --accent-danger: #ef4444;
             
-            --text-main: #f1f5f9;
-            --text-sub: #94a3b8;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
             
-            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow: 0 0 20px rgba(139, 92, 246, 0.15);
         }
 
         * { box-sizing: border-box; outline: none; }
@@ -29,10 +29,9 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
-            /* 背景に動的なグラデーション */
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.1) 0%, transparent 40%);
+                radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 85% 85%, rgba(251, 191, 36, 0.08) 0%, transparent 50%);
             color: var(--text-main);
             margin: 0;
             min-height: 100vh;
@@ -40,521 +39,532 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            overflow-y: scroll;
         }
 
-        /* --- ヘッダーエリア --- */
-        .header-container {
+        /* ヘッダー */
+        .header-section {
             text-align: center;
-            margin: 40px 0 30px;
+            margin: 60px 0 40px;
             width: 100%;
-            max-width: 700px;
-            animation: fadeInDown 0.8s ease;
+            max-width: 600px;
+            animation: fadeIn 0.8s ease-out;
         }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 800;
+            font-size: 3.5rem;
+            font-weight: 900;
             margin: 0;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff 0%, var(--accent-yellow) 100%);
+            line-height: 1;
+            background: linear-gradient(135deg, #fff 30%, var(--accent-primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .subtitle {
-            color: var(--text-sub);
-            font-size: 0.9rem;
-            margin-top: 10px;
-            letter-spacing: 2px;
+        .tagline {
+            color: var(--accent-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            margin-top: 15px;
             text-transform: uppercase;
         }
 
-        /* --- 検索ボックス --- */
-        .search-wrapper {
+        /* 検索エリア */
+        .search-box {
             position: relative;
-            margin-top: 30px;
+            margin-top: 40px;
             display: flex;
-            gap: 12px;
+            gap: 10px;
+            background: rgba(255,255,255,0.03);
+            padding: 8px;
+            border-radius: 20px;
+            border: var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         input {
-            width: 100%;
-            padding: 16px 24px;
-            border-radius: 16px;
-            background: var(--bg-input);
-            border: var(--glass-border);
-            color: #fff;
-            font-size: 1.1rem;
-            transition: 0.3s;
-            backdrop-filter: blur(4px);
-        }
-
-        input:focus {
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-        }
-
-        .search-btn {
-            padding: 0 32px;
-            border-radius: 16px;
+            flex: 1;
+            background: transparent;
             border: none;
-            background: linear-gradient(135deg, var(--accent-yellow), #f59e0b);
-            color: #0f172a;
+            color: #fff;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .btn-search {
+            background: var(--accent-primary);
+            color: #000;
+            border: none;
+            padding: 0 30px;
+            border-radius: 14px;
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.2s;
         }
 
-        .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+        .btn-search:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
         }
 
-        /* --- メインダッシュボード --- */
+        /* ダッシュボード */
         #dashboard {
-            display: none;
             width: 100%;
-            max-width: 1000px;
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 1100px;
+            display: none; /* 初期非表示 */
+            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        /* プロフィールカード */
-        .profile-card {
+        /* プレイヤーカード */
+        .hero-card {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: var(--glass-border);
             border-radius: 24px;
-            padding: 30px;
-            display: flex;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
             gap: 30px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
         }
-
-        /* 背景装飾 */
-        .profile-card::before {
+        
+        /* 装飾バー */
+        .hero-card::after {
             content: '';
             position: absolute;
-            top: 0; right: 0; width: 200px; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03));
-            transform: skewX(-20deg);
+            bottom: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
         }
 
-        .avatar-frame {
+        .avatar-wrapper {
             position: relative;
-            width: 100px;
-            height: 100px;
-            flex-shrink: 0;
+            width: 120px; height: 120px;
         }
 
         .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            border: 2px solid var(--accent-purple);
+            width: 100%; height: 100%;
+            border-radius: 24px;
             object-fit: cover;
-            background: #000;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: #111;
         }
 
-        .player-details h2 {
+        .player-info h2 {
+            font-size: 2.5rem;
             margin: 0;
-            font-size: 2.2rem;
-            color: #fff;
+            letter-spacing: -1px;
         }
 
-        .badges {
+        .meta-tags {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
 
-        .badge {
-            padding: 6px 12px;
-            border-radius: 8px;
+        .tag {
             font-size: 0.75rem;
-            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .badge-rank { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
-        .badge-date { background: rgba(34, 211, 238, 0.2); color: var(--accent-cyan); }
+        .tag-xp { background: rgba(139, 92, 246, 0.2); color: #d8b4fe; border: 1px solid rgba(139, 92, 246, 0.3); }
+        .tag-date { background: rgba(255,255,255,0.05); color: var(--text-muted); border: var(--glass-border); }
 
-        /* ナビゲーションタブ */
-        .nav-tabs {
+        /* タブナビゲーション */
+        .tabs {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             margin-bottom: 20px;
-            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
         }
-        
-        .nav-tabs::-webkit-scrollbar { height: 4px; }
-        .nav-tabs::-webkit-scrollbar-thumb { background: var(--accent-purple); border-radius: 4px; }
+        .tabs::-webkit-scrollbar { display: none; }
 
-        .tab-btn {
-            background: rgba(30, 41, 59, 0.5);
+        .tab {
+            background: transparent;
+            color: var(--text-muted);
             border: 1px solid transparent;
-            color: var(--text-sub);
-            padding: 12px 20px;
+            padding: 10px 20px;
             border-radius: 12px;
             cursor: pointer;
             white-space: nowrap;
             font-weight: 600;
-            font-size: 0.9rem;
             transition: 0.3s;
         }
-
-        .tab-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
-        .tab-btn.active {
-            background: rgba(139, 92, 246, 0.15);
-            border-color: var(--accent-purple);
-            color: var(--accent-purple);
+        .tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .tab.active {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-secondary);
+            color: var(--accent-secondary);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
         }
 
-        /* 統計グリッド */
-        .stats-grid {
+        /* グリッドレイアウト */
+        .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 20px;
         }
 
-        .stat-card {
+        .stat-box {
             background: var(--bg-card);
             border: var(--glass-border);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 24px;
             transition: 0.3s;
             position: relative;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(40, 50, 70, 0.8);
+        .stat-box:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
             border-color: rgba(255,255,255,0.2);
         }
 
-        .stat-card.featured {
-            grid-column: span 2;
-            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
-            border: 1px solid var(--accent-yellow);
-        }
-        @media (max-width: 600px) { .stat-card.featured { grid-column: span 1; } }
-
-        .label {
+        .stat-label {
+            display: block;
             font-size: 0.8rem;
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-sub);
-            margin-bottom: 8px;
-            display: block;
+            margin-bottom: 10px;
         }
 
-        .value {
+        .stat-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #fff;
         }
-        
-        .value.highlight { color: var(--accent-yellow); }
-        .value.win { color: var(--accent-cyan); }
-        .value.kill { color: var(--accent-rose); }
 
-        .sub-value {
+        .stat-sub {
             font-size: 0.85rem;
-            color: var(--text-sub);
-            margin-top: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            margin-top: 8px;
+            color: var(--text-muted);
+            opacity: 0.8;
         }
 
-        /* ローディング */
+        /* カラーバリエーション */
+        .c-gold { color: var(--accent-primary); }
+        .c-purp { color: var(--accent-secondary); }
+        .c-green { color: var(--accent-success); }
+        .c-red { color: var(--accent-danger); }
+
+        /* 特殊カード */
+        .stat-box.featured {
+            grid-column: span 2;
+            background: linear-gradient(160deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+        }
+
+        /* ローディング & エラー */
         .loader {
             display: none;
-            width: 48px; height: 48px;
-            border: 5px solid #FFF;
-            border-bottom-color: var(--accent-purple);
+            width: 50px; height: 50px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent-primary);
             border-radius: 50%;
-            animation: rotation 1s linear infinite;
+            animation: spin 1s linear infinite;
             margin: 50px auto;
         }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* フッター */
-        .footer {
-            margin-top: auto;
-            padding: 40px 0 20px;
-            color: var(--text-sub);
-            font-size: 0.8rem;
+        
+        .error-msg {
+            display: none;
+            color: var(--accent-danger);
+            background: rgba(239, 68, 68, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
             text-align: center;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .hero-card { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+            .stat-box.featured { grid-column: span 1; }
+            h1 { font-size: 2.5rem; }
+            .header-section { margin-top: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header-container">
+    <div class="header-section">
         <h1>HIVE <span>ANALYTICS</span></h1>
-        <div class="subtitle">Professional Stats Tracker</div>
+        <div class="tagline">UNOFFICIAL STATS TRACKER</div>
         
-        <div class="search-wrapper">
-            <input type="text" id="username" placeholder="Gamertagを入力 (例: steve)" onkeypress="if(event.key==='Enter') search()">
-            <button class="search-btn" onclick="search()">分析開始</button>
+        <div class="search-box">
+            <input type="text" id="username" placeholder="Enter Gamertag (e.g. Steve)" autocomplete="off">
+            <button class="btn-search" onclick="fetchStats()">SEARCH</button>
         </div>
+        <div id="errorMsg" class="error-msg"></div>
     </div>
 
     <div class="loader" id="loader"></div>
 
     <div id="dashboard">
-        <div class="profile-card">
-            <div class="avatar-frame">
-                <img id="userAvatar" src="" alt="Avatar" class="avatar" onerror="this.src='https://playhive.com/static/img/hive-logo.png'">
+        <div class="hero-card">
+            <div class="avatar-wrapper">
+                <img id="avatar" src="" class="avatar" alt="User Skin">
             </div>
-            <div class="player-details">
-                <h2 id="displayId">Username</h2>
-                <div class="badges">
-                    <span class="badge badge-rank" id="totalLevel">LVL FETCHING...</span>
-                    <span class="badge badge-date" id="firstPlayed">初参加: ---</span>
+            <div class="player-info">
+                <h2 id="displayName">Username</h2>
+                <div class="meta-tags">
+                    <span class="tag tag-xp" id="totalXP">Calculating...</span>
+                    <span class="tag tag-date" id="firstLogin">First Seen: ---</span>
                 </div>
             </div>
+            <div style="opacity: 0.5; font-size: 3rem;">🎮</div>
         </div>
 
-        <div class="nav-tabs" id="tabsContainer">
-            </div>
+        <div class="tabs" id="tabsContainer"></div>
 
-        <div id="statsContent" class="stats-grid">
-            </div>
-    </div>
-
-    <div class="footer">
-        Powered by The Hive API & SK0528JP Logic<br>
-        Unofficial Tool for Educational Purpose
+        <div class="stats-container" id="statsGrid"></div>
     </div>
 
     <script>
-        // --- 設定: APIエンドポイントと日本語名のマッピング ---
+        // --- 設定: エンドポイント定義 ---
         const GAMES = {
-            wars:   { name: "Treasure Wars",  endpoint: "wars" },
-            sky:    { name: "SkyWars",        endpoint: "sky" },
-            sg:     { name: "Survival Games", endpoint: "sg" },
-            dr:     { name: "DeathRun",       endpoint: "dr" },
-            hide:   { name: "Hide & Seek",    endpoint: "hide" },
-            murder: { name: "Murder Mystery", endpoint: "murder" },
-            ctf:    { name: "Capture The Flag", endpoint: "ctf" }, // APIがあれば
-            drop:   { name: "Block Drop",     endpoint: "drop" },   // APIがあれば
-            build:  { name: "Just Build",     endpoint: "build" },
-            ground: { name: "Ground Wars",    endpoint: "ground" }
+            wars:   { name: "Treasure Wars",  id: "wars" },
+            sky:    { name: "SkyWars",        id: "sky" },
+            sg:     { name: "Survival Games", id: "sg" },
+            dr:     { name: "DeathRun",       id: "dr" },
+            hide:   { name: "Hide & Seek",    id: "hide" },
+            murder: { name: "Murder Mystery", id: "murder" },
+            build:  { name: "Just Build",     id: "build" },
+            ground: { name: "Ground Wars",    id: "ground" },
+            drop:   { name: "Block Drop",     id: "drop" },
+            ctf:    { name: "Capture The Flag", id: "ctf" },
+            bridge: { name: "The Bridge",     id: "bridge" },
+            party:  { name: "Block Party",    id: "party" }
         };
 
-        // 状態管理
-        let playerData = {};
-        let currentTab = 'wars';
+        // CORS回避用プロキシ (開発・デモ用)
+        // 本番環境では自身のバックエンドサーバー経由を推奨
+        const PROXY_URL = "https://api.allorigins.win/raw?url=";
+        const HIVE_API_BASE = "https://api.playhive.com/v0/game/all";
 
-        // --- メイン関数: データ取得 ---
-        async function search() {
-            const rawInput = document.getElementById('username').value.trim();
-            if (!rawInput) return;
+        let currentData = {};
+        let activeGame = 'wars';
+
+        // 入力欄でEnterキー対応
+        document.getElementById('username').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') fetchStats();
+        });
+
+        // --- データ取得メイン関数 ---
+        async function fetchStats() {
+            const input = document.getElementById('username').value.trim();
+            if (!input) return;
+
+            const username = encodeURIComponent(input); // スペース対応
             
-            // BEプレイヤー向け: スペースがあってもURLエンコードで対応
-            const username = encodeURIComponent(rawInput);
-
             // UIリセット
             document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
 
             try {
-                // 全ゲームのAPIを並列で叩く (高速化)
-                const promises = Object.keys(GAMES).map(key => 
-                    fetch(`https://api.playhive.com/v0/game/all/${GAMES[key].endpoint}/${username}`)
+                // 並列リクエスト作成 (CORSプロキシ経由)
+                // Promise.allSettled を使うことで、一部のゲームデータがなくても全体を失敗させない
+                const promises = Object.values(GAMES).map(game => 
+                    fetch(`${PROXY_URL}${encodeURIComponent(`${HIVE_API_BASE}/${game.id}/${username}`)}`)
                         .then(res => {
-                            if (!res.ok) return null; // 404ならnullを返す
+                            if (!res.ok) throw new Error(res.status);
                             return res.json();
                         })
-                        .catch(() => null)
+                        .then(data => ({ gameId: game.id, data: data, status: 'fulfilled' }))
+                        .catch(err => ({ gameId: game.id, error: err, status: 'rejected' }))
                 );
 
-                const results = await Promise.all(promises);
+                const results = await Promise.allSettled(promises);
 
                 // データ整理
-                playerData = {};
-                let hasData = false;
-                let firstPlayedTimestamp = Infinity;
+                currentData = {};
+                let hasAnyData = false;
                 let totalXP = 0;
+                let oldestJoin = Infinity;
 
-                Object.keys(GAMES).forEach((key, index) => {
-                    const data = results[index];
-                    if (data) {
-                        playerData[key] = data;
-                        hasData = true;
-                        
-                        // 初参加日の最小値を探す
-                        if (data.first_played && data.first_played < firstPlayedTimestamp) {
-                            firstPlayedTimestamp = data.first_played;
-                        }
-                        // XP合算
+                results.forEach(res => {
+                    if (res.status === 'fulfilled' && res.value.status === 'fulfilled') {
+                        const { gameId, data } = res.value;
+                        currentData[gameId] = data;
+                        hasAnyData = true;
+
+                        // 全体統計の計算
                         if (data.xp) totalXP += data.xp;
-                    } else {
-                        playerData[key] = null;
+                        if (data.first_played && data.first_played < oldestJoin) {
+                            oldestJoin = data.first_played;
+                        }
                     }
                 });
 
-                if (!hasData) {
-                    throw new Error("No Data Found");
+                if (!hasAnyData) {
+                    throw new Error("プレイヤーが見つからないか、データが公開されていません。");
                 }
 
-                // --- プロフィール更新 ---
-                document.getElementById('displayId').innerText = decodeURIComponent(username);
+                // --- 画面描画 ---
                 
-                // 初参加日
-                if(firstPlayedTimestamp !== Infinity) {
-                    const date = new Date(firstPlayedTimestamp * 1000);
-                    document.getElementById('firstPlayed').innerText = `初参加: ${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
-                }
-
-                // 総合レベル推計 (簡易表示)
-                document.getElementById('totalLevel').innerText = `TOTAL XP: ${(totalXP/1000).toFixed(1)}k`;
-
-                // アイコン取得ロジック (統合版対応)
-                // 1. まずBedrock向けのスキン取得を試みる (TydiumCraftなどのAPIが優秀だが、ここでは汎用的なGeyserスキンAPIを使用)
-                // 2. 失敗時はHTML側のonerrorでHiveロゴへ
-                // ※Java版IDならこれで正しく出る。BE版ID(スペース入り)もエンコードされれば対応するAPIを使用
-                const cleanName = rawInput.replace(/ /g, '%20'); 
-                // Geyser API等を使うのが確実だが、ここではBE対応しているAPIの一例として
-                // TydiumCraftやCraftheadがある。今回は汎用性重視で `https://api.tydiumcraft.net/v1/players/skin?name=` を使う手もあるが、
-                // 最も安定しているのは「名前からXUIDを引いて画像を出す」こと。
-                // 簡易実装として、まずはMinotar(Java)を試し、だめならデフォルトへ倒す。
-                // ★BE対応のためのURL生成★
-                // 実際にはHive APIに avatar_url があればそれが最強。
-                let avatarUrl = `https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png`; // 仮
+                // 1. プロフィール情報
+                document.getElementById('displayName').textContent = decodeURIComponent(username);
+                document.getElementById('totalXP').textContent = `TOTAL XP: ${totalXP.toLocaleString()}`;
                 
-                // 特定のゲームデータにアバター情報が含まれているかチェック
-                const anyGameData = Object.values(playerData).find(d => d && d.avatar_url);
-                if (anyGameData && anyGameData.avatar_url) {
-                    avatarUrl = anyGameData.avatar_url;
+                if (oldestJoin !== Infinity) {
+                    const d = new Date(oldestJoin * 1000);
+                    document.getElementById('firstLogin').textContent = `First Seen: ${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
                 } else {
-                    // BEスキンの取得（Craftheadを利用：BE/Java両対応の強力なAPI）
-                    avatarUrl = `https://crafthead.net/avatar/${cleanName}`;
+                    document.getElementById('firstLogin').textContent = "First Seen: Unknown";
                 }
-                document.getElementById('userAvatar').src = avatarUrl;
 
+                // アバター: 統合版の可能性が高い場合(スペース含むなど)の考慮
+                // 今回は汎用的なGeyserスキンAPIを使用
+                const cleanName = input.replace(/ /g, '%20');
+                document.getElementById('avatar').src = `https://crafthead.net/avatar/${cleanName}`;
+                // エラー時のフォールバック
+                document.getElementById('avatar').onerror = function() {
+                    this.src = 'https://playhive.com/static/img/hive-logo.png';
+                };
 
-                // タブ生成
+                // 2. タブ生成
                 renderTabs();
-                // 初期タブ表示
-                // データがある最初のゲームを選択
-                const firstAvailable = Object.keys(GAMES).find(k => playerData[k] !== null) || 'wars';
-                switchTab(firstAvailable);
+                
+                // 3. 最初の有効なゲームを表示
+                const firstGame = Object.keys(currentData)[0] || 'wars';
+                switchTab(firstGame);
 
-                // UI表示
+                // 表示切り替え
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
 
-            } catch (e) {
-                console.error(e);
-                alert("プレイヤーが見つからないか、データがありません。\n統合版IDの場合は正確に入力してください。");
+            } catch (err) {
+                console.error(err);
                 document.getElementById('loader').style.display = 'none';
+                const errorDiv = document.getElementById('errorMsg');
+                errorDiv.textContent = `ERROR: ${err.message || "データ取得に失敗しました。"}`;
+                errorDiv.style.display = 'block';
             }
         }
 
-        // --- タブ描画 ---
+        // --- タブ生成 ---
         function renderTabs() {
             const container = document.getElementById('tabsContainer');
             container.innerHTML = '';
-            
-            Object.keys(GAMES).forEach(key => {
-                // データがあるゲームだけタブを表示（あるいは全表示してdisableにするか。今回は全表示）
+
+            Object.keys(currentData).forEach(key => {
                 const btn = document.createElement('button');
-                btn.className = `tab-btn ${key === currentTab ? 'active' : ''}`;
-                btn.innerText = GAMES[key].name;
+                btn.className = 'tab';
+                btn.textContent = GAMES[key].name;
                 btn.onclick = () => switchTab(key);
-                
-                // データがない場合は薄くするなどの処理も可
-                if (!playerData[key]) btn.style.opacity = '0.5';
-                
+                btn.dataset.id = key;
                 container.appendChild(btn);
             });
         }
 
         // --- タブ切り替え ---
-        function switchTab(key) {
-            currentTab = key;
+        function switchTab(gameId) {
+            activeGame = gameId;
             
-            // タブのアクティブ表示更新
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.innerText === GAMES[key].name) btn.classList.add('active');
+            // タブのアクティブ化
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.id === gameId);
             });
 
-            renderStats(key);
+            renderStats(gameId);
         }
 
-        // --- 統計データ描画 (ここが本丸) ---
-        function renderStats(key) {
-            const container = document.getElementById('statsContent');
-            const data = playerData[key];
+        // --- 統計カード描画 ---
+        function renderStats(gameId) {
+            const container = document.getElementById('statsGrid');
             container.innerHTML = '';
+            const data = currentData[gameId];
+            if (!data) return;
 
-            if (!data) {
-                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-sub)">このゲームのプレイデータはありません。</div>`;
-                return;
-            }
-
-            // --- 共通指標の計算 ---
-            const played = data.played || 0;
-            const victories = data.victories || 0;
-            const kills = data.kills || 0;
-            const deaths = data.deaths || 0;
-
-            const winRate = played > 0 ? ((victories / played) * 100).toFixed(1) : 0;
-            const kdRatio = deaths > 0 ? (kills / deaths).toFixed(2) : kills;
-
-            // --- カード生成ヘルパー ---
-            const addCard = (label, value, subText = null, styleClass = '') => {
-                const div = document.createElement('div');
-                div.className = `stat-card ${styleClass}`;
+            // 共通ヘルパー: カード生成
+            const createCard = (label, value, sub = '', type = '') => {
+                if (value === undefined || value === null) return;
                 
-                let subHtml = '';
-                if(subText) subHtml = `<div class="sub-value">${subText}</div>`;
+                let colorClass = '';
+                if (type === 'win') colorClass = 'c-green';
+                if (type === 'kill') colorClass = 'c-red';
+                if (type === 'gold') colorClass = 'c-gold';
 
+                const div = document.createElement('div');
+                div.className = `stat-box ${type === 'featured' ? 'featured' : ''}`;
                 div.innerHTML = `
-                    <span class="label">${label}</span>
-                    <div class="value ${styleClass}">${value}</div>
-                    ${subHtml}
+                    <span class="stat-label">${label}</span>
+                    <div class="stat-value ${colorClass}">${value.toLocaleString()}</div>
+                    ${sub ? `<div class="stat-sub">${sub}</div>` : ''}
                 `;
                 container.appendChild(div);
             };
 
-            // --- メイン統計 (大きく表示) ---
-            addCard("Victory Points", victories.toLocaleString(), `Win Rate: ${winRate}%`, "featured win");
-            addCard("Total Kills", kills.toLocaleString(), `K/D Ratio: ${kdRatio}`, "featured kill");
+            // 基本データ計算
+            const played = data.played || 0;
+            const victories = data.victories || 0;
+            const kills = data.kills || 0;
+            const deaths = data.deaths || 0;
             
-            // --- 基本情報 ---
-            addCard("Total Played", played.toLocaleString());
-            addCard("Deaths", deaths.toLocaleString());
-            if(data.xp) addCard("Experience", data.xp.toLocaleString(), "Total XP");
-            if(data.prestige) addCard("Prestige", data.prestige, "周回数", "highlight");
+            const winRate = played > 0 ? ((victories/played)*100).toFixed(1) + '%' : '0%';
+            const kd = deaths > 0 ? (kills/deaths).toFixed(2) : kills;
 
-            // --- ゲーム固有の詳細データ (APIにあるものは全部出す) ---
+            // --- カード配置 ---
+            createCard("Victories", victories, `Win Rate: ${winRate}`, "featured");
+            createCard("Kills", kills, `K/D: ${kd}`, "kill");
+            createCard("Games Played", played);
+            createCard("Deaths", deaths);
             
-            // Treasure Wars
-            if (key === 'wars') {
-                if(data.final_kills) addCard("Final Kills", data.final_kills.toLocaleString(), "K/D計算対象外", "kill");
-                if(data.treasure_destroyed) addCard("Treasures", data.treasure_destroyed.toLocaleString(), "破壊した宝");
+            if (data.xp) createCard("Experience", data.xp, null, "gold");
+            if (data.prestige) createCard("Prestige", data.prestige, "周回レベル", "gold");
+
+            // --- ゲーム固有データ (動的表示) ---
+            // 必要に応じて追加可能
+            const extraStats = {
+                'wars': [
+                    ['Final Kills', data.final_kills, 'kill'],
+                    ['Treasures', data.treasure_destroyed, 'gold']
+                ],
+                'sky': [
+                    ['Mystery Chests', data.mystery_chests_destroyed],
+                    ['Spells Used', data.spells_used]
+                ],
+                'dr': [
+                    ['Checkpoints', data.checkpoints],
+                    ['Traps Activated', data.activated_traps]
+                ],
+                'hide': [
+                    ['Hiders Killed', data.hider_kills],
+                    ['Seekers Killed', data.seeker_kills]
+                ],
+                'murder': [
+                    ['Murders Killed', data.murderer_eliminations],
+                    ['Coins', data.coins_collected]
+                ]
+            };
+
+            if (extraStats[gameId]) {
+                extraStats[gameId].forEach(item => {
+                    if (item[1] !== undefined) createCard(item[0], item[1], '', item[2]);
+                });
             }
-            // SkyWars
-            if (key === 'sky') {
-                if(data.mystery_chests_destroyed) addCard("Mystery Chests", data.mystery_chests_destroyed.toLocaleString());
-                if(data.spells_used) addCard("Spells Used", data.spells_used.toLocaleString());
-            }
-            // DeathRun
-            if (key === 'dr') {
-                if(data.checkpoints) addCard("Checkpoints", data.checkpoints.toLocaleString());
-                if(data.activated_traps) addCard("Traps Activated", data.activated_traps.toLocaleStri
+        }
+    </script>
+</body>
+</html>
