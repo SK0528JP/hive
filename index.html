@@ -2,183 +2,219 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVE ANALYTICS | THE ULTIMATE COLLECTIVE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HIVE ANALYTICS | FIXED EDITION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #020617;
-            --bg-card: rgba(15, 23, 42, 0.7);
-            --accent-gold: #fbbf24;
-            --accent-purple: #8b5cf6;
-            --accent-cyan: #22d3ee;
+            --bg-main: #020617;
+            --bg-glass: rgba(30, 41, 59, 0.65);
+            --accent-gold: #f59e0b;
+            --accent-purple: #a855f7;
+            --accent-cyan: #06b6d4;
             --accent-rose: #f43f5e;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --accent-green: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-glass: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        * { box-sizing: border-box; outline: none; transition: all 0.2s ease; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
             margin: 0; min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 20px 15px;
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
-                radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.1) 0%, transparent 45%);
-            overflow-x: hidden;
+                radial-gradient(circle at 10% 10%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            background-attachment: fixed;
         }
 
-        /* --- Header & Search --- */
-        .search-section {
-            width: 100%; max-width: 650px; text-align: center; margin: 60px 0 40px;
-            animation: fadeInDown 0.8s ease-out;
+        /* --- Search Area --- */
+        .search-wrapper {
+            width: 100%; max-width: 600px; text-align: center; margin-top: 3vh; margin-bottom: 25px;
+            animation: slideDown 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .search-section h1 {
-            font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 900; letter-spacing: -3px; margin: 0;
+        h1 {
+            font-size: clamp(2rem, 7vw, 3.2rem); font-weight: 900; letter-spacing: -2px; margin: 0 0 25px 0;
             background: linear-gradient(135deg, #fff 30%, var(--accent-gold));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
         }
 
-        .search-bar {
-            margin-top: 35px; display: flex; gap: 12px;
-            background: var(--bg-card); padding: 10px; border-radius: 24px;
-            border: var(--glass-border); backdrop-filter: blur(15px);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+        .input-group {
+            position: relative; display: flex; align-items: center;
+            background: var(--bg-glass); padding: 8px; border-radius: 20px;
+            border: var(--border-glass); backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .search-bar i { color: var(--text-muted); padding-left: 20px; align-self: center; font-size: 1.2rem; }
+        .input-group:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px -5px rgba(168, 85, 247, 0.25);
+            border-color: rgba(168, 85, 247, 0.5);
+        }
 
         input {
             flex: 1; background: transparent; border: none; color: #fff;
-            padding: 15px; font-size: 1.2rem; font-family: 'Inter', sans-serif;
+            padding: 14px 15px; font-size: 1.1rem; font-family: 'Inter', sans-serif; min-width: 0;
         }
 
-        .btn-analyze {
-            background: var(--accent-gold); color: #000; border: none;
-            padding: 0 35px; border-radius: 18px; font-weight: 900;
-            cursor: pointer; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        .btn-submit {
+            background: var(--accent-gold); color: #0f172a; border: none;
+            width: 50px; height: 50px; border-radius: 14px;
+            font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-
-        .btn-analyze:hover { transform: scale(1.05) translateY(-2px); background: #fff; }
+        .btn-submit:active { transform: scale(0.92); }
 
         /* --- Dashboard --- */
-        #dashboard { width: 100%; max-width: 1200px; display: none; animation: fadeInUp 0.6s ease; }
+        #main-dashboard { width: 100%; max-width: 1100px; display: none; padding-bottom: 50px; }
 
-        .profile-hero {
-            background: var(--bg-card); border-radius: 35px; border: var(--glass-border);
-            padding: 45px; margin-bottom: 35px; display: flex; align-items: center; gap: 40px;
-            backdrop-filter: blur(25px); position: relative; overflow: hidden;
+        /* Profile Header */
+        .profile-header {
+            background: var(--bg-glass); border-radius: 28px; border: var(--border-glass);
+            padding: 30px; margin-bottom: 25px;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            backdrop-filter: blur(20px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
         }
+        @media (min-width: 768px) { .profile-header { flex-direction: row; text-align: left; gap: 35px; padding: 40px; } }
 
-        .avatar-glow {
-            position: relative; width: 160px; height: 160px;
-            border-radius: 35px; padding: 5px;
+        .avatar-box {
+            position: relative; padding: 5px; border-radius: 30px;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            margin-bottom: 15px; flex-shrink: 0;
+        }
+        @media (min-width: 768px) { .avatar-box { margin-bottom: 0; } }
+
+        .avatar-img {
+            width: 100px; height: 100px; border-radius: 24px; background: #0f172a;
+            object-fit: cover; display: block; border: 4px solid #0f172a;
+        }
+        @media (min-width: 768px) { .avatar-img { width: 120px; height: 120px; } }
+
+        .profile-info h2 { font-size: 2.2rem; margin: 0 0 10px 0; font-weight: 800; line-height: 1; overflow-wrap: break-word; }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        @media (min-width: 768px) { .tag-container { justify-content: flex-start; } }
+
+        .meta-tag {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+            color: var(--accent-cyan); display: flex; align-items: center; gap: 6px;
         }
 
-        .avatar-main {
-            width: 100%; height: 100%; border-radius: 30px;
-            object-fit: cover; background: #000; border: 4px solid #0f172a;
+        /* Tabs */
+        .scroll-wrapper {
+            overflow-x: auto; padding-bottom: 15px; margin: 0 -15px 15px -15px;
+            padding-left: 15px; padding-right: 15px;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
         }
+        .scroll-wrapper::-webkit-scrollbar { display: none; }
 
-        .user-meta h2 { font-size: 3.5rem; margin: 0; letter-spacing: -2px; line-height: 1; }
-        
-        .badge-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
-        .badge-item {
-            background: rgba(255,255,255,0.05); border: var(--glass-border);
-            padding: 8px 18px; border-radius: 100px; font-size: 0.85rem; font-weight: 800;
-            display: flex; align-items: center; gap: 8px; color: var(--accent-cyan);
-            text-transform: uppercase;
-        }
+        .tabs-list { display: flex; gap: 10px; }
 
-        /* --- Tabs --- */
-        .nav-tabs {
-            display: flex; gap: 12px; overflow-x: auto; padding-bottom: 20px;
-            scrollbar-width: none;
+        .tab-item {
+            background: var(--bg-glass); color: var(--text-secondary); border: var(--border-glass);
+            padding: 10px 22px; border-radius: 16px; white-space: nowrap; font-weight: 700;
+            font-size: 0.9rem; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.25s;
         }
-        .nav-tabs::-webkit-scrollbar { display: none; }
-        .tab-btn {
-            background: var(--bg-card); color: var(--text-muted); border: var(--glass-border);
-            padding: 14px 28px; border-radius: 18px; cursor: pointer; white-space: nowrap;
-            font-weight: 800; display: flex; align-items: center; gap: 10px;
-        }
-        .tab-btn.active {
+        .tab-item.active {
             background: var(--accent-purple); color: #fff; border-color: transparent;
-            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4); transform: translateY(-3px);
+            box-shadow: 0 8px 20px -5px rgba(168, 85, 247, 0.5); transform: translateY(-2px);
         }
 
-        /* --- Stats Grid --- */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        /* Stats Grid */
+        .grid-container {
+            display: grid; grid-template-columns: 1fr; gap: 15px;
+        }
+        @media (min-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 950px) { .grid-container { grid-template-columns: repeat(3, 1fr); } }
+
         .stat-card {
-            background: var(--bg-card); border: var(--glass-border); border-radius: 28px;
-            padding: 30px; position: relative; overflow: hidden;
+            background: var(--bg-glass); border: var(--border-glass); border-radius: 24px;
+            padding: 22px; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center;
         }
-        .stat-card:hover { border-color: var(--accent-cyan); background: rgba(30, 41, 59, 0.8); }
-        .stat-card i { position: absolute; top: 25px; right: 25px; font-size: 2rem; opacity: 0.1; color: var(--accent-cyan); }
         
-        .stat-label { font-size: 0.9rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
-        .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 2.5rem; font-weight: 700; margin-top: 10px; display: block; }
-        .stat-detail { margin-top: 12px; font-size: 0.95rem; color: var(--accent-cyan); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .bg-icon {
+            position: absolute; top: 15px; right: 20px; font-size: 3rem;
+            color: #fff; opacity: 0.04; pointer-events: none;
+        }
 
-        /* --- Utilities --- */
-        .loader { display: none; width: 70px; height: 70px; border: 6px solid rgba(255,255,255,0.05); border-top: 6px solid var(--accent-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 60px auto; }
-        .error-overlay { display: none; background: rgba(244, 63, 94, 0.1); border: 1px solid var(--accent-rose); border-radius: 20px; padding: 25px; margin-top: 20px; color: var(--accent-rose); text-align: center; max-width: 500px; width: 100%; }
+        .stat-title { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 800; letter-spacing: 1px; margin-bottom: 6px; }
+        .stat-number { font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; font-weight: 700; color: #fff; display: block; }
+
+        /* Fixed Progress Bars */
+        .bar-bg {
+            margin-top: 14px; background: rgba(0,0,0,0.4); height: 6px; width: 100%;
+            border-radius: 10px; overflow: hidden; position: relative;
+        }
+        .bar-fill {
+            height: 100%; border-radius: 10px; width: 0%; /* Start at 0 */
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .fill-win { background: var(--accent-green); }
+        .fill-kd { background: var(--accent-rose); }
+        .fill-xp { background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan)); }
+
+        .detail-row { font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; display: flex; justify-content: space-between; font-weight: 500; }
+        .detail-row strong { color: var(--text-primary); }
+
+        /* Loader & Error */
+        .loader { display: none; width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 40px auto; }
+        .error-box { display: none; background: rgba(244, 63, 94, 0.1); border: 1px solid var(--accent-rose); color: var(--accent-rose); padding: 15px; border-radius: 16px; margin-top: 20px; text-align: center; font-size: 0.9rem; line-height: 1.5; }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 768px) {
-            .profile-hero { flex-direction: column; text-align: center; padding: 35px; }
-            .user-meta h2 { font-size: 2.5rem; }
-        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <section class="search-section">
+    <div class="search-wrapper">
         <h1>HIVE ANALYTICS</h1>
-        <div class="search-bar">
-            <i class="fa-solid fa-user-astronaut"></i>
-            <input type="text" id="targetUser" placeholder="Player ID" autocomplete="off">
-            <button class="btn-analyze" onclick="startAnalysis()">
-                Search <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <div class="input-group">
+            <i class="fa-solid fa-magnifying-glass" style="margin-left: 15px; color: var(--text-secondary);"></i>
+            <input type="text" id="targetName" placeholder="User ID" autocomplete="off">
+            <button class="btn-submit" onclick="executeSearch()">
+                <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
-        <div id="errorBox" class="error-overlay"></div>
-    </section>
+        <div id="errorDisplay" class="error-box"></div>
+    </div>
 
-    <div class="loader" id="loadingRing"></div>
+    <div class="loader" id="loadingSpinner"></div>
 
-    <main id="dashboard">
-        <div class="profile-hero">
-            <div class="avatar-glow">
-                <img id="displayAvatar" class="avatar-main" src="" alt="Hive Player" onerror="this.src='https://playhive.com/static/img/hive-logo.png'">
+    <main id="main-dashboard">
+        <div class="profile-header">
+            <div class="avatar-box">
+                <img id="pAvatar" class="avatar-img" src="" alt="Avatar" onerror="this.src='https://playhive.com/static/img/hive-logo.png'">
             </div>
-            <div class="user-meta">
-                <h2 id="displayName">---</h2>
-                <div class="badge-row" id="topBadges"></div>
+            <div class="profile-info">
+                <h2 id="pName">---</h2>
+                <div class="tag-container" id="pBadges"></div>
             </div>
         </div>
 
-        <nav class="nav-tabs" id="gameNav"></nav>
-        <div class="stats-grid" id="statsContainer"></div>
+        <div class="scroll-wrapper">
+            <div class="tabs-list" id="navContainer"></div>
+        </div>
+
+        <div class="grid-container" id="statsArea"></div>
     </main>
 
     <script>
-        const PROXY_SERVER = "https://api.allorigins.win/raw?url=";
+        const API_PROXY = "https://api.allorigins.win/raw?url=";
         const HIVE_ENDPOINT = "https://api.playhive.com/v0/game/all";
         
-        const GAME_DATA_MAP = {
-            wars:   { name: "Treasure Wars", icon: "fa-gem" },
+        const GAMES_CONFIG = {
+            wars:   { name: "Bed Wars", icon: "fa-bed" },
             sky:    { name: "SkyWars", icon: "fa-cloud" },
             sg:     { name: "Survival Games", icon: "fa-fire" },
             dr:     { name: "DeathRun", icon: "fa-person-running" },
@@ -192,142 +228,200 @@
             party:  { name: "Block Party", icon: "fa-music" }
         };
 
-        let storage = {};
+        let playerCache = {};
 
-        // Enterキー対応
-        document.getElementById('targetUser').addEventListener('keypress', e => e.key === 'Enter' && startAnalysis());
+        // Enter Key Search
+        document.getElementById('targetName').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') executeSearch();
+        });
 
-        async function startAnalysis() {
-            const username = document.getElementById('targetUser').value.trim();
-            if(!username) return;
+        async function executeSearch() {
+            const nameInput = document.getElementById('targetName').value.trim();
+            if(!nameInput) return;
 
-            const loader = document.getElementById('loadingRing');
-            const dashboard = document.getElementById('dashboard');
-            const errorBox = document.getElementById('errorBox');
+            const loader = document.getElementById('loadingSpinner');
+            const dashboard = document.getElementById('main-dashboard');
+            const errorDisp = document.getElementById('errorDisplay');
 
             loader.style.display = 'block';
             dashboard.style.display = 'none';
-            errorBox.style.display = 'none';
+            errorDisp.style.display = 'none';
+            document.getElementById('targetName').blur();
 
             try {
-                const encoded = encodeURIComponent(username);
-                const keys = Object.keys(GAME_DATA_MAP);
-                
-                // 全ゲームデータを並列取得
-                const promises = keys.map(k => 
-                    fetch(`${PROXY_SERVER}${encodeURIComponent(`${HIVE_ENDPOINT}/${k}/${encoded}`)}`)
-                    .then(r => r.ok ? r.json() : null).catch(() => null)
-                );
+                const safeName = encodeURIComponent(nameInput);
+                const keys = Object.keys(GAMES_CONFIG);
 
-                const rawResults = await Promise.all(promises);
-                
-                storage = {};
-                let foundFlag = false;
+                // Parallel Fetch
+                const responses = await Promise.all(keys.map(k => 
+                    fetch(`${API_PROXY}${encodeURIComponent(`${HIVE_ENDPOINT}/${k}/${safeName}`)}`)
+                    .then(r => r.ok ? r.json() : null)
+                    .catch(() => null)
+                ));
+
+                playerCache = {};
+                let found = false;
                 let totalXP = 0;
-                let oldestJoin = Infinity;
                 let officialAvatar = "";
+                let firstSeen = Infinity;
 
                 keys.forEach((key, i) => {
-                    if(rawResults[i]) {
-                        storage[key] = rawResults[i];
-                        foundFlag = true;
-                        totalXP += (rawResults[i].xp || 0);
-                        if(rawResults[i].first_played < oldestJoin) oldestJoin = rawResults[i].first_played;
-                        if(!officialAvatar && rawResults[i].avatar_url) officialAvatar = rawResults[i].avatar_url;
+                    const d = responses[i];
+                    if(d) {
+                        playerCache[key] = d;
+                        found = true;
+                        totalXP += (d.xp || 0);
+                        if(d.first_played && d.first_played < firstSeen) firstSeen = d.first_played;
+                        if(!officialAvatar && d.avatar_url) officialAvatar = d.avatar_url;
                     }
                 });
 
-                if(!foundFlag) throw new Error("<b>Player Not Found</b><br><small>大文字・小文字まで正確に入力してください。</small>");
+                if(!found) throw new Error(`Player "<b>${nameInput}</b>" not found.<br>Check casing (e.g. "Steve" vs "steve").`);
 
-                // プロフィール描画
-                document.getElementById('displayName').innerText = username;
-                document.getElementById('displayAvatar').src = officialAvatar || `https://crafthead.net/avatar/${encoded}`;
+                // Update Profile
+                document.getElementById('pName').innerText = nameInput;
+                document.getElementById('pAvatar').src = officialAvatar || `https://crafthead.net/avatar/${safeName}`;
                 
-                const badges = document.getElementById('topBadges');
-                badges.innerHTML = `
-                    <div class="badge-item"><i class="fa-solid fa-crown"></i> Total XP: ${totalXP.toLocaleString()}</div>
-                    <div class="badge-item"><i class="fa-solid fa-clock"></i> Since: ${oldestJoin !== Infinity ? new Date(oldestJoin * 1000).toLocaleDateString() : 'Unknown'}</div>
+                const joinStr = firstSeen !== Infinity ? new Date(firstSeen * 1000).toLocaleDateString() : 'Unknown';
+                
+                // Determine Generic Tier based on Total XP (Cosmetic only)
+                let tier = "Novice";
+                if(totalXP > 10000) tier = "Regular";
+                if(totalXP > 100000) tier = "Pro";
+                if(totalXP > 500000) tier = "Master";
+                if(totalXP > 1000000) tier = "Legend";
+
+                document.getElementById('pBadges').innerHTML = `
+                    <div class="meta-tag"><i class="fa-solid fa-layer-group"></i> ${tier}</div>
+                    <div class="meta-tag"><i class="fa-solid fa-star"></i> XP: ${totalXP.toLocaleString()}</div>
+                    <div class="meta-tag"><i class="fa-solid fa-clock"></i> Since: ${joinStr}</div>
                 `;
 
-                renderNavigation();
-                updateDisplay(Object.keys(storage)[0]);
+                setupTabs();
+                renderStats(Object.keys(playerCache)[0]);
 
                 loader.style.display = 'none';
                 dashboard.style.display = 'block';
 
             } catch (err) {
                 loader.style.display = 'none';
-                errorBox.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${err.message}`;
-                errorBox.style.display = 'block';
+                errorDisp.innerHTML = err.message;
+                errorDisp.style.display = 'block';
             }
         }
 
-        function renderNavigation() {
-            const nav = document.getElementById('gameNav');
-            nav.innerHTML = '';
-            Object.keys(storage).forEach(k => {
+        function setupTabs() {
+            const container = document.getElementById('navContainer');
+            container.innerHTML = '';
+            Object.keys(playerCache).forEach(k => {
                 const btn = document.createElement('div');
-                btn.className = 'tab-btn';
-                btn.id = `nav-${k}`;
-                btn.innerHTML = `<i class="fa-solid ${GAME_DATA_MAP[k].icon}"></i> ${GAME_DATA_MAP[k].name}`;
-                btn.onclick = () => updateDisplay(k);
-                nav.appendChild(btn);
+                btn.className = 'tab-item';
+                btn.id = `tab-${k}`;
+                btn.innerHTML = `<i class="fa-solid ${GAMES_CONFIG[k].icon}"></i> ${GAMES_CONFIG[k].name}`;
+                btn.onclick = () => renderStats(k);
+                container.appendChild(btn);
             });
         }
 
-        function updateDisplay(k) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`nav-${k}`).classList.add('active');
+        function renderStats(key) {
+            // Tab Active State
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            const activeTab = document.getElementById(`tab-${key}`);
+            if(activeTab) {
+                activeTab.classList.add('active');
+                activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
 
-            const container = document.getElementById('statsContainer');
-            container.innerHTML = '';
-            const d = storage[k];
+            const grid = document.getElementById('statsArea');
+            grid.innerHTML = '';
+            const d = playerCache[key];
 
-            // 統計計算ロジック
-            const kd = d.deaths > 0 ? (d.kills / d.deaths).toFixed(2) : d.kills;
-            const winRate = d.played > 0 ? ((d.victories / d.played) * 100).toFixed(1) : 0;
-            const kpm = d.played > 0 ? (d.kills / d.played).toFixed(2) : 0;
-            const estLevel = Math.floor(Math.sqrt(d.xp / 100)) || 1;
+            // Metrics Calculation
+            const played = d.played || 0;
+            const victories = d.victories || 0;
+            const kills = d.kills || 0;
+            const deaths = d.deaths || 0;
+            const xp = d.xp || 0;
 
-            const createCard = (label, val, icon, detail = '') => {
-                if(val === undefined) return;
-                const card = document.createElement('div');
-                card.className = 'stat-card';
-                card.innerHTML = `
-                    <i class="fa-solid ${icon}"></i>
-                    <span class="stat-label">${label}</span>
-                    <span class="stat-value">${val.toLocaleString()}</span>
-                    ${detail ? `<div class="stat-detail"><i class="fa-solid fa-chart-line"></i> ${detail}</div>` : ''}
+            const winRate = played > 0 ? ((victories / played) * 100).toFixed(1) : "0.0";
+            const kd = deaths > 0 ? (kills / deaths).toFixed(2) : kills;
+            const xpPerGame = played > 0 ? Math.floor(xp / played) : 0; // "Avg XP" replaces "Level"
+
+            // Helper to Create Card with Fixed Animation Logic
+            const createCard = (label, value, icon, subHTML = null, barColorClass = null, barPercent = 0) => {
+                const el = document.createElement('div');
+                el.className = 'stat-card';
+                
+                let html = `
+                    <i class="fa-solid ${icon} bg-icon"></i>
+                    <span class="stat-title">${label}</span>
+                    <span class="stat-number">${value.toLocaleString()}</span>
                 `;
-                container.appendChild(card);
+
+                if(subHTML) html += subHTML;
+                
+                // Add Progress Bar if requested
+                if(barColorClass) {
+                    html += `
+                        <div class="bar-bg">
+                            <div class="bar-fill ${barColorClass}"></div>
+                        </div>
+                    `;
+                }
+
+                el.innerHTML = html;
+                grid.appendChild(el);
+
+                // --- CRITICAL FIX: Robust Animation Trigger ---
+                if(barColorClass) {
+                    const bar = el.querySelector('.bar-fill');
+                    // Force a reflow before setting width (ensures transition works)
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            bar.style.width = `${Math.min(barPercent, 100)}%`;
+                        });
+                    });
+                }
             };
 
-            // 全ゲーム共通
-            createCard("Victories", d.victories, "fa-trophy", `Win Rate: ${winRate}%`);
-            createCard("Kills", d.kills, "fa-crosshairs", `K/D Ratio: ${kd}`);
-            createCard("Matches", d.played, "fa-gamepad", `Avg Kills: ${kpm}`);
-            createCard("Experience", d.xp, "fa-fire", `Estimated Level: ${estLevel}`);
-            createCard("Deaths", d.deaths, "fa-skull");
+            // 1. Victories (Win Rate Bar)
+            createCard("Victories", victories, "fa-trophy", 
+                `<div class="detail-row"><span>Win Rate</span><strong>${winRate}%</strong></div>`,
+                "fill-win", winRate
+            );
 
-            // ゲーム別詳細項目（極限引き出し）
-            if(k === 'wars') {
-                createCard("Final Kills", d.final_kills, "fa-skull-crossbones", "Non-respawn elims");
-                createCard("Treasures", d.treasure_destroyed, "fa-gem", "Objective broken");
-            } else if(k === 'murder') {
-                createCard("Coins", d.coins_collected, "fa-coins", "Wealth collected");
-                createCard("Hero Kills", d.murderer_eliminations, "fa-shield", "Murderer stopped");
-            } else if(k === 'sky') {
-                createCard("Mystery Chests", d.mystery_chests_destroyed, "fa-box-open");
-                createCard("Spells Used", d.spells_used, "fa-wand-sparkles");
-            } else if(k === 'dr') {
-                createCard("Checkpoints", d.checkpoints, "fa-flag-checkered");
-                createCard("Traps Used", d.activated_traps, "fa-bolt");
-            } else if(k === 'hide') {
-                createCard("Hider Kills", d.hider_kills, "fa-ghost");
-                createCard("Seeker Kills", d.seeker_kills, "fa-magnifying-glass");
-            } else if(k === 'build') {
-                createCard("Total Votes", d.total_votes, "fa-check-to-slot");
+            // 2. Kills (K/D Bar - Capped visually at 5.0 for scale)
+            const kdScale = Math.min((kd / 5) * 100, 100); 
+            createCard("Kills", kills, "fa-crosshairs", 
+                `<div class="detail-row"><span>K/D Ratio</span><strong>${kd}</strong></div>`,
+                "fill-kd", kdScale
+            );
+
+            // 3. Efficiency (XP per Game - Replaces inaccurate Level)
+            // Use a visual scale where 500 XP/game is considered "Great" (100%)
+            const efficiencyScale = Math.min((xpPerGame / 500) * 100, 100);
+            createCard("Avg XP / Game", xpPerGame, "fa-bolt", 
+                `<div class="detail-row"><span>Efficiency</span><strong>${xpPerGame} XP</strong></div>`,
+                "fill-xp", efficiencyScale
+            );
+
+            // 4. Basic Stats
+            createCard("Matches Played", played, "fa-gamepad");
+            createCard("Deaths", deaths, "fa-skull");
+            createCard("Total XP", xp, "fa-fire"); // Just raw XP, honest and accurate
+
+            // 5. Game Specifics
+            if(key === 'wars') {
+                createCard("Final Kills", d.final_kills, "fa-skull-crossbones");
+                createCard("Treasures", d.treasure_destroyed, "fa-gem");
             }
+            if(key === 'murder') {
+                createCard("Coins", d.coins_collected, "fa-coins");
+                createCard("Hero Kills", d.murderer_eliminations, "fa-shield-halved");
+            }
+            if(key === 'sky') createCard("Mystery Chests", d.mystery_chests_destroyed, "fa-box-open");
+            if(key === 'dr') createCard("Checkpoints", d.checkpoints, "fa-flag-checkered");
+            if(key === 'hide') createCard("Hider Kills", d.hider_kills, "fa-ghost");
         }
     </script>
 </body>
